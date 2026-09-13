@@ -1,0 +1,52 @@
+{
+	"format_version": 2,
+	"metadata": {
+		"authors": [
+			"bridge."
+		],
+		"generated_with": {
+			"bridge": [
+				"2.7.54"
+			],
+			"dash": [
+				"0.11.7"
+			]
+		}
+	},
+	"header": {
+		"name": "Succulents",
+		"description": "Real succulent species and documented hybrids for Minecraft Bedrock Edition.",
+		"min_engine_version": [
+			1,
+			21,
+			120
+		],
+		"uuid": "24902266-a2fd-4415-9c4f-9c815d88271e",
+		"version": [
+			1,
+			0,
+			4
+		]
+	},
+	"modules": [
+		{
+			"type": "resources",
+			"uuid": "e73f6604-ff2f-461b-bb95-cb83d5a3f501",
+			"version": [
+				1,
+				0,
+				4
+			]
+		}
+	],
+	"dependencies": [
+		{
+			"uuid": "e52dca78-075c-41ce-9e19-1c28876c7160",
+			"version": [
+				1,
+				0,
+				4
+			]
+		}
+	]
+}

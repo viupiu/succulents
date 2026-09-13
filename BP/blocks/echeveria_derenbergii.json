@@ -1,0 +1,37 @@
+{
+    "format_version": "1.26.0",
+    "minecraft:block": {
+        "description": {
+            "identifier": "succulents:echeveria_derenbergii",
+            "menu_category": {
+                "category": "nature"
+            }
+        },
+        "components": {
+            "minecraft:display_name": "tile.succulents:echeveria_derenbergii.name",
+            "minecraft:geometry": "geometry.echeveria_derenbergii",
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "echeveria_derenbergii",
+                    "render_method": "opaque"
+                }
+            },
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 0.2
+            },
+            "minecraft:collision_box": false,
+            "minecraft:selection_box": {
+                "origin": [
+                    -2,
+                    0,
+                    -1.5
+                ],
+                "size": [
+                    4.5,
+                    4.5,
+                    3
+                ]
+            }
+        }
+    }
+}

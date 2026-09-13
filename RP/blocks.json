@@ -1,0 +1,13 @@
+{
+	"format_version": [
+		1,
+		1,
+		0
+	],
+	"succulents:echeveria_elegans": {
+		"sound": "grass"
+	},
+	"succulents:echeveria_derenbergii": {
+		"sound": "grass"
+	}
+}

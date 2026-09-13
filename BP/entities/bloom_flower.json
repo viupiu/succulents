@@ -1,0 +1,92 @@
+{
+    "format_version": "1.21.0",
+    "minecraft:entity": {
+        "description": {
+            "identifier": "succulents:bloom_flower",
+            "is_spawnable": true,
+            "is_summonable": true,
+            "spawn_category": "creature"
+        },
+        "component_groups": {
+            "succulents:alive": {
+                "minecraft:timer": {
+                    "time": [
+                        160,
+                        240
+                    ],
+                    "looping": false,
+                    "time_down_event": {
+                        "event": "succulents:dry",
+                        "target": "self"
+                    }
+                }
+            },
+            "succulents:dry": {
+                "minecraft:spell_effects": {
+                    "add_effects": [
+                        {
+                            "effect": "invisibility",
+                            "duration": 999999
+                        }
+                    ]
+                },
+                "minecraft:timer": {
+                    "time": [
+                        1,
+                        1
+                    ],
+                    "looping": false,
+                    "time_down_event": {
+                        "event": "succulents:die",
+                        "target": "self"
+                    }
+                }
+            }
+        },
+        "components": {
+            "minecraft:type_family": {
+                "family": [
+                    "succulents"
+                ]
+            },
+            "minecraft:is_hidden_when_invisible": {},
+            "minecraft:no_gravity": {},
+            "minecraft:pushable": {
+                "is_pushable": false,
+                "is_pushable_by_piston": true
+            },
+            "minecraft:collision_box": false,
+            "minecraft:damage_sensor": {
+                "triggers": [
+                    {
+                        "cause": "all",
+                        "deals_damage": false
+                    }
+                ]
+            }
+        },
+        "events": {
+            "minecraft:entity_spawned": {
+                "add": {
+                    "component_groups": [
+                        "succulents:alive"
+                    ]
+                }
+            },
+            "succulents:dry": {
+                "add": {
+                    "component_groups": [
+                        "succulents:dry"
+                    ]
+                }
+            },
+            "succulents:die": {
+                "run_command": {
+                    "command": [
+                        "kill @s"
+                    ]
+                }
+            }
+        }
+    }
+}

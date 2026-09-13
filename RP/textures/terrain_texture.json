@@ -9,6 +9,9 @@
 		},
 		"echeveria_derenbergii": {
 			"textures": "textures/blocks/echeveria_derenbergii"
+		},
+		"echeveria_fallax": {
+			"textures": "textures/blocks/echeveria_fallax"
 		}
 	}
 }

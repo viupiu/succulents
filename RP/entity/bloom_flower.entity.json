@@ -1,0 +1,24 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "succulents:bloom_flower",
+            "materials": {
+                "default": "entity_alphatest"
+            },
+            "textures": {
+                "default": "textures/entity/bloom_flower"
+            },
+            "geometry": {
+                "default": "geometry.bloom_flower"
+            },
+            "render_controllers": [
+                "controller.render.bloom_flower"
+            ],
+            "spawn_egg": {
+                "base_color": "#C86A52",
+                "overlay_color": "#E8C837"
+            }
+        }
+    }
+}

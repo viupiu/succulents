@@ -31,6 +31,30 @@
                     6,
                     8
                 ]
+            },
+            "minecraft:queued_ticking": {
+                "looping": true,
+                "interval_range": [
+                    4800,
+                    9600
+                ],
+                "on_tick": {
+                    "event": "succulents:bloom",
+                    "target": "self"
+                }
+            },
+            "minecraft:on_interact": {
+                "event": "succulents:bloom",
+                "target": "self"
+            }
+        },
+        "events": {
+            "succulents:bloom": {
+                "run_command": {
+                    "command": [
+                        "summon succulents:bloom_flower ~ ~ ~"
+                    ]
+                }
             }
         }
     }

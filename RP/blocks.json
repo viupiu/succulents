@@ -9,5 +9,8 @@
 	},
 	"succulents:echeveria_derenbergii": {
 		"sound": "grass"
+	},
+	"succulents:echeveria_fallax": {
+		"sound": "grass"
 	}
 }

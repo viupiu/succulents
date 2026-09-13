@@ -16,7 +16,7 @@
                                                      "name":  "root",
                                                      "pivot":  [
                                                                    0,
-                                                                   -24,
+                                                                   -16,
                                                                    0
                                                                ]
                                                  },
@@ -1176,14 +1176,14 @@
                                    "description":  {
                                                        "visible_bounds_offset":  [
                                                                                      0,
-                                                                                     0,
+                                                                                     -0.42,
                                                                                      0
                                                                                  ],
                                                        "texture_height":  64,
-                                                       "visible_bounds_width":  3,
+                                                       "visible_bounds_width":  4.5,
                                                        "identifier":  "geometry.bloom_flower",
                                                        "texture_width":  64,
-                                                       "visible_bounds_height":  2
+                                                       "visible_bounds_height":  1.3
                                                    }
                                }
                            ]

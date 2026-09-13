@@ -5,6 +5,23 @@
                                    "bones":  [
                                                  {
                                                      "cubes":  [
+
+                                                               ],
+                                                     "parent":  "",
+                                                     "rotation":  [
+                                                                      0,
+                                                                      0,
+                                                                      0
+                                                                  ],
+                                                     "name":  "root",
+                                                     "pivot":  [
+                                                                   0,
+                                                                   -24,
+                                                                   0
+                                                               ]
+                                                 },
+                                                 {
+                                                     "cubes":  [
                                                                    {
                                                                        "size":  [
                                                                                     0.9,
@@ -86,7 +103,7 @@
                                                                                   ]
                                                                    }
                                                                ],
-                                                     "parent":  "",
+                                                     "parent":  "root",
                                                      "rotation":  [
                                                                       0,
                                                                       0,
@@ -1159,7 +1176,7 @@
                                    "description":  {
                                                        "visible_bounds_offset":  [
                                                                                      0,
-                                                                                     1,
+                                                                                     0,
                                                                                      0
                                                                                  ],
                                                        "texture_height":  64,

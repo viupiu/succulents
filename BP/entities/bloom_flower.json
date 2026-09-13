@@ -8,6 +8,19 @@
             "spawn_category": "creature"
         },
         "component_groups": {
+            "succulents:verify": {
+                "minecraft:timer": {
+                    "time": [
+                        2,
+                        2
+                    ],
+                    "looping": false,
+                    "time_down_event": {
+                        "event": "succulents:verify",
+                        "target": "self"
+                    }
+                }
+            },
             "succulents:alive": {
                 "minecraft:timer": {
                     "time": [
@@ -49,6 +62,10 @@
                     "succulents"
                 ]
             },
+            "minecraft:health": {
+                "value": 2,
+                "max": 2
+            },
             "minecraft:is_hidden_when_invisible": {},
             "minecraft:no_gravity": {},
             "minecraft:pushable": {
@@ -56,23 +73,30 @@
                 "is_pushable_by_piston": true
             },
             "minecraft:collision_box": {
-                "width": 0.01,
-                "height": 0.01
-            },
-            "minecraft:damage_sensor": {
-                "triggers": [
-                    {
-                        "cause": "all",
-                        "deals_damage": false
-                    }
-                ]
+                "width": 0.4,
+                "height": 0.5
             }
         },
         "events": {
             "minecraft:entity_spawned": {
+                "run_command": {
+                    "command": [
+                        "tag @s add succulents_fresh"
+                    ]
+                },
                 "add": {
                     "component_groups": [
+                        "succulents:verify",
                         "succulents:alive"
+                    ]
+                }
+            },
+            "succulents:verify": {
+                "run_command": {
+                    "command": [
+                        "execute if entity @e[type=succulents:bloom_flower,tag=!succulents_fresh,r=0.5] run kill @s",
+                        "execute unless block ~ ~-1 ~ succulents:echeveria_derenbergii run execute unless block ~ ~-1 ~ succulents:echeveria_elegans run execute unless block ~ ~-1 ~ succulents:echeveria_fallax run kill @s",
+                        "tag @s remove succulents_fresh"
                     ]
                 }
             },

@@ -8,19 +8,6 @@
             "spawn_category": "creature"
         },
         "component_groups": {
-            "succulents:verify": {
-                "minecraft:timer": {
-                    "time": [
-                        2,
-                        2
-                    ],
-                    "looping": false,
-                    "time_down_event": {
-                        "event": "succulents:verify",
-                        "target": "self"
-                    }
-                }
-            },
             "succulents:alive": {
                 "minecraft:timer": {
                     "time": [
@@ -75,6 +62,17 @@
             "minecraft:collision_box": {
                 "width": 0.4,
                 "height": 0.5
+            },
+            "minecraft:timer": {
+                "time": [
+                    2,
+                    3
+                ],
+                "looping": false,
+                "time_down_event": {
+                    "event": "succulents:verify",
+                    "target": "self"
+                }
             }
         },
         "events": {
@@ -86,7 +84,6 @@
                 },
                 "add": {
                     "component_groups": [
-                        "succulents:verify",
                         "succulents:alive"
                     ]
                 }

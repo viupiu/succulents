@@ -9,6 +9,14 @@ const SUCCULENTS = new Set([
 
 const DIMENSIONS = ["overworld", "nether", "the_end"];
 
+function isSucc(block) {
+	return block != null && SUCCULENTS.has(block.typeId);
+}
+
+function blockName(block) {
+	return block != null ? block.typeId : "none";
+}
+
 function watchFlowers() {
 	for (const dimName of DIMENSIONS) {
 		let dim;
@@ -25,7 +33,7 @@ function watchFlowers() {
 			continue;
 		}
 
-		const places = new Set();
+		const bySucc = new Map();
 		for (const flower of flowers) {
 			let pos;
 			try {
@@ -34,26 +42,49 @@ function watchFlowers() {
 				continue;
 			}
 
-			const below = dim.getBlock({
-				x: Math.floor(pos.x),
-				y: Math.floor(pos.y) - 1,
-				z: Math.floor(pos.z)
-			});
+			const fx = Math.floor(pos.x);
+			const fy = Math.floor(pos.y);
+			const fz = Math.floor(pos.z);
 
-			if (!below || !SUCCULENTS.has(below.typeId)) {
+			const self = dim.getBlock({ x: fx, y: fy, z: fz });
+			const below = dim.getBlock({ x: fx, y: fy - 1, z: fz });
+
+			if (!isSucc(self) && !isSucc(below)) {
+				world.sendMessage(
+					`[succ] REMOVE ${fx},${fy},${fz} | self=${blockName(self)} | below=${blockName(below)}`
+				);
 				try {
 					flower.remove();
 				} catch {}
 				continue;
 			}
 
-			const key = `${Math.floor(pos.x)},${Math.floor(pos.y) - 1},${Math.floor(pos.z)}`;
-			if (places.has(key)) {
+			const succCell = isSucc(self)
+				? { x: fx, y: fy, z: fz }
+				: { x: fx, y: fy - 1, z: fz };
+			const key = `${succCell.x},${succCell.y},${succCell.z}`;
+			const best = bySucc.get(key);
+
+			if (!best) {
+				bySucc.set(key, flower);
+				continue;
+			}
+
+			const bestDist = Math.abs(best.location.y - (succCell.y + 1));
+			const newDist = Math.abs(pos.y - (succCell.y + 1));
+			if (newDist < bestDist) {
+				world.sendMessage(
+					`[succ] DEDUPE remove ${Math.floor(best.location.x)},${Math.floor(best.location.y)},${Math.floor(best.location.z)}`
+				);
+				try {
+					best.remove();
+				} catch {}
+				bySucc.set(key, flower);
+			} else {
+				world.sendMessage(`[succ] DEDUPE remove ${fx},${fy},${fz}`);
 				try {
 					flower.remove();
 				} catch {}
-			} else {
-				places.add(key);
 			}
 		}
 	}

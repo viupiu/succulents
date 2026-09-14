@@ -1,0 +1,51 @@
+{
+	"format_version": "1.26.0",
+	"minecraft:block": {
+		"description": {
+			"identifier": "succulents:bloom_flower",
+			"menu_category": {
+				"category": "nature"
+			}
+		},
+		"components": {
+			"minecraft:display_name": "tile.succulents:bloom_flower.name",
+			"minecraft:geometry": "geometry.bloom_flower_block",
+			"minecraft:material_instances": {
+				"*": {
+					"texture": "bloom_flower",
+					"render_method": "alpha_test"
+				}
+			},
+			"minecraft:destructible_by_mining": {
+				"seconds_to_destroy": 0.4
+			},
+			"minecraft:collision_box": false,
+			"minecraft:selection_box": {
+				"origin": [
+					-0.5,
+					0,
+					-0.5
+				],
+				"size": [
+					1,
+					1,
+					1
+				]
+			},
+			"minecraft:placement_filter": {
+				"conditions": [
+					{
+						"allowed_faces": [
+							"up"
+						],
+						"block_filter": [
+							"succulents:echeveria_derenbergii",
+							"succulents:echeveria_elegans",
+							"succulents:echeveria_fallax"
+						]
+					}
+				]
+			}
+		}
+	}
+}

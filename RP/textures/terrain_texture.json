@@ -12,6 +12,9 @@
 		},
 		"echeveria_fallax": {
 			"textures": "textures/blocks/echeveria_fallax"
+		},
+		"bloom_flower": {
+			"textures": "textures/entity/bloom_flower"
 		}
 	}
 }

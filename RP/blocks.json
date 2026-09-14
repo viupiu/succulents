@@ -12,5 +12,8 @@
 	},
 	"succulents:echeveria_fallax": {
 		"sound": "grass"
+	},
+	"succulents:bloom_flower": {
+		"sound": "grass"
 	}
 }

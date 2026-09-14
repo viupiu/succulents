@@ -6,14 +6,19 @@ const SUCCULENTS = new Set([
 	"succulents:echeveria_elegans",
 	"succulents:echeveria_fallax"
 ]);
-
 const DIMENSIONS = ["overworld", "nether", "the_end"];
 
-function isSucc(block) {
-	return block != null && SUCCULENTS.has(block.typeId);
+const blooms = new Map();
+
+function randomInt(min, max) {
+	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function watchFlowers() {
+function isSucc(block) {
+	return block !== undefined && block !== null && SUCCULENTS.has(block.typeId);
+}
+
+function cleanLegacyEntities() {
 	for (const dimName of DIMENSIONS) {
 		let dim;
 		try {
@@ -21,66 +26,120 @@ function watchFlowers() {
 		} catch {
 			continue;
 		}
-
-		let flowers;
+		let list;
 		try {
-			flowers = dim.getEntities({ type: FLOWER });
+			list = dim.getEntities({ type: "succulents:bloom_flower" });
 		} catch {
 			continue;
 		}
-
-		const bySucc = new Map();
-		for (const flower of flowers) {
-			let pos;
+		for (const entity of list) {
 			try {
-				pos = flower.location;
+				entity.remove();
+			} catch {}
+		}
+	}
+}
+
+function tickFlowers() {
+	const now = Date.now();
+	for (const dimName of DIMENSIONS) {
+		let dim;
+		try {
+			dim = world.getDimension(dimName);
+		} catch {
+			continue;
+		}
+		for (const [key, rec] of [...blooms]) {
+			const block = dim.getBlock({ x: rec.x, y: rec.y, z: rec.z });
+			if (block === undefined || block === null) {
+				continue;
+			}
+			if (block.typeId !== FLOWER) {
+				blooms.delete(key);
+				continue;
+			}
+			const below = dim.getBlock({ x: rec.x, y: rec.y - 1, z: rec.z });
+			if (below === undefined || below === null) {
+				continue;
+			}
+			if (!isSucc(below)) {
+				try {
+					dim.setBlock({ x: rec.x, y: rec.y, z: rec.z }, "minecraft:air");
+				} catch {}
+				blooms.delete(key);
+				continue;
+			}
+			if (now >= rec.expires) {
+				try {
+					dim.setBlock({ x: rec.x, y: rec.y, z: rec.z }, "minecraft:air");
+				} catch {}
+				blooms.delete(key);
+			}
+		}
+	}
+}
+
+function tryBloom() {
+	for (const player of world.getAllPlayers()) {
+		const pos = player.location;
+		const baseX = Math.floor(pos.x);
+		const baseY = Math.floor(pos.y);
+		const baseZ = Math.floor(pos.z);
+		for (let i = 0; i < 12; i++) {
+			const x = baseX + randomInt(-12, 12);
+			const z = baseZ + randomInt(-12, 12);
+			const y = baseY + randomInt(-4, 6);
+			let dim;
+			try {
+				dim = player.dimension;
 			} catch {
 				continue;
 			}
-
-			const fx = Math.floor(pos.x);
-			const fy = Math.floor(pos.y);
-			const fz = Math.floor(pos.z);
-
-			const self = dim.getBlock({ x: fx, y: fy, z: fz });
-			const below = dim.getBlock({ x: fx, y: fy - 1, z: fz });
-
-			if (!isSucc(self) && !isSucc(below)) {
-				try {
-					flower.remove();
-				} catch {}
+			const cell = dim.getBlock({ x, y, z });
+			if (cell === undefined || cell === null) {
 				continue;
 			}
-
-			const succCell = isSucc(self)
-				? { x: fx, y: fy, z: fz }
-				: { x: fx, y: fy - 1, z: fz };
-			const key = `${succCell.x},${succCell.y},${succCell.z}`;
-			const best = bySucc.get(key);
-
-			if (!best) {
-				bySucc.set(key, flower);
+			if (cell.typeId === FLOWER) {
+				const belowFlower = dim.getBlock({ x, y: y - 1, z });
+				if (belowFlower !== undefined && belowFlower !== null && !isSucc(belowFlower)) {
+					try {
+						dim.setBlock({ x, y, z }, "minecraft:air");
+					} catch {}
+				}
 				continue;
 			}
-
-			const bestDist = Math.abs(best.location.y - (succCell.y + 1));
-			const newDist = Math.abs(pos.y - (succCell.y + 1));
-			if (newDist < bestDist) {
-				try {
-					best.remove();
-				} catch {}
-				bySucc.set(key, flower);
-			} else {
-				try {
-					flower.remove();
-				} catch {}
+			if (cell.typeId !== "minecraft:air") {
+				continue;
 			}
+			const below = dim.getBlock({ x, y: y - 1, z });
+			if (below === undefined || below === null || !isSucc(below)) {
+				continue;
+			}
+			try {
+				dim.setBlock({ x, y, z }, FLOWER);
+				blooms.set(`${x},${y},${z}`, {
+					x,
+					y,
+					z,
+					expires: Date.now() + randomInt(160000, 240000)
+				});
+			} catch {}
+			break;
 		}
 	}
 }
 
 system.runInterval(() => {
 	try {
-		watchFlowers();
+		cleanLegacyEntities();
 	} catch {}
-}, 2);
+	try {
+		tickFlowers();
+	} catch {}
+}, 4);
+
+system.runInterval(() => {
+	try {
+		tryBloom();
+	} catch {}
+}, 600);

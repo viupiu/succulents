@@ -14,11 +14,7 @@
             },
             "render_controllers": [
                 "controller.render.bloom_flower"
-            ],
-            "spawn_egg": {
-                "base_color": "#C86A52",
-                "overlay_color": "#E8C837"
-            }
+            ]
         }
     }
 }

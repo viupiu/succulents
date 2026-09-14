@@ -3,7 +3,7 @@
     "minecraft:entity": {
         "description": {
             "identifier": "succulents:bloom_flower",
-            "is_spawnable": true,
+            "is_spawnable": false,
             "is_summonable": true,
             "spawn_category": "creature"
         },

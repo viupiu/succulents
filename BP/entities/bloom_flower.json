@@ -50,8 +50,8 @@
                 ]
             },
             "minecraft:health": {
-                "value": 2,
-                "max": 2
+                "value": 6,
+                "max": 6
             },
             "minecraft:is_hidden_when_invisible": {},
             "minecraft:no_gravity": {},

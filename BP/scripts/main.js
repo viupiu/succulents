@@ -83,4 +83,4 @@ system.runInterval(() => {
 	try {
 		watchFlowers();
 	} catch {}
-}, 20);
+}, 2);

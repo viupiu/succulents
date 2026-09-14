@@ -13,10 +13,6 @@ function isSucc(block) {
 	return block != null && SUCCULENTS.has(block.typeId);
 }
 
-function blockName(block) {
-	return block != null ? block.typeId : "none";
-}
-
 function watchFlowers() {
 	for (const dimName of DIMENSIONS) {
 		let dim;
@@ -50,9 +46,6 @@ function watchFlowers() {
 			const below = dim.getBlock({ x: fx, y: fy - 1, z: fz });
 
 			if (!isSucc(self) && !isSucc(below)) {
-				world.sendMessage(
-					`[succ] REMOVE ${fx},${fy},${fz} | self=${blockName(self)} | below=${blockName(below)}`
-				);
 				try {
 					flower.remove();
 				} catch {}
@@ -73,15 +66,11 @@ function watchFlowers() {
 			const bestDist = Math.abs(best.location.y - (succCell.y + 1));
 			const newDist = Math.abs(pos.y - (succCell.y + 1));
 			if (newDist < bestDist) {
-				world.sendMessage(
-					`[succ] DEDUPE remove ${Math.floor(best.location.x)},${Math.floor(best.location.y)},${Math.floor(best.location.z)}`
-				);
 				try {
 					best.remove();
 				} catch {}
 				bySucc.set(key, flower);
 			} else {
-				world.sendMessage(`[succ] DEDUPE remove ${fx},${fy},${fz}`);
 				try {
 					flower.remove();
 				} catch {}
